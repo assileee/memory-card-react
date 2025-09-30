@@ -5,6 +5,7 @@ import type { TCard, TCardList } from "./types/card.types"
 import ModalComp from "./components/ModalComp"
 
 const App = () => {
+	console.log(cards)
 	// Create pairs of cards
 	const createGameCards = (): TCardList => {
 		const pairs = cards.flatMap((card) => [
@@ -21,7 +22,7 @@ const App = () => {
 
 	// Game cards state
 	const [gameCards, setGameCards] = useState<TCardList>(
-		createGameCards() // shuffled cards
+		createGameCards()// shuffled cards
 	)
 	// flipped cards with an array of cards names
 	const [flippedCards, setFlippedCards] = useState<TCard["name"][]>([])
@@ -34,6 +35,9 @@ const App = () => {
 
 	// game state
 	const [gameOver, setGameOver] = useState(true)
+	
+	const mistakes = Math.max(0, moves - matches)
+
 
 	const handleCardClick = (clickedCard: TCard) => {
 		// Check if the card is already matched
@@ -97,7 +101,11 @@ const App = () => {
 					)
 				})}
 			</div>
-			<ModalComp showModal={gameOver} toggleModal={setGameOver} />
+			<ModalComp
+  				showModal={gameOver}
+  				toggleModal={setGameOver}
+  				mistakes={mistakes}
+			/>
 		</div>
 	)
 }
